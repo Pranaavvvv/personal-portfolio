@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PranavDOS 2.0</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="matrix" class="matrix-bg"></canvas>
+    <div class="terminal">
+        <div class="header">
+            <span class="window-controls">
+                <div class="btn close"></div>
+                <div class="btn minimize"></div>
+                <div class="btn maximize"></div>
+            </span>
+            <span class="title">PranavDOS v2.0</span>
+            <span class="clear-btn">Clear</span>
+        </div>
+        <div class="output">
+            <p class="ascii-art">
+                ____                              ____   ___  ____  
+               |  _ \ _ __ __ _ _ __   __ ___   _|  _ \ / _ \/ ___| 
+               | |_) | '__/ _` | '_ \ / _` \ \ / / | | | | | \___ \ 
+               |  __/| | | (_| | | | | (_| |\ V /| |_| | |_| |___) |
+               |_|   |_|  \__,_|_| |_|\__,_| \_/ |____/ \___/|____/ 
+            </p>
+            <p>Welcome to PranavDOS v2.0!. This is My Personal Portfolio Website. Type <span class="cmd-highlight">help</span> to see available commands.</p>
+        </div>
+        <div class="input-container">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="commandInput" autofocus autocomplete="off">
+            <span class="cursor"></span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
