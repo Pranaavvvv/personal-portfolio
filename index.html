@@ -3,26 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pranav's Portfolio</title>
+    <title>PranavDOS 3.0</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="minecraft-theme">
-        <h1 class="title">Welcome to Pranav's Portfolio</h1>
-        <div class="start-button" onclick="startPortfolio()">START</div>
+    <!-- Background Elements -->
+    <canvas id="matrix-bg" class="matrix-background"></canvas>
+    <canvas id="particle-canvas" class="particle-background"></canvas>
 
-    
-        <div class="snake-container">
-            <!-- Snake segments -->
-            <div class="snake-segment" id="snake-head"></div>
-            <div class="snake-segment"></div>
-            <div class="snake-segment"></div>
-            <div class="snake-segment"></div>
-            <div class="snake-segment"></div>
+    <!-- Main Terminal Container -->
+    <div class="terminal">
+        <!-- Terminal Header -->
+        <div class="header">
+            <div class="window-controls">
+                <div class="btn close"></div>
+                <div class="btn minimize"></div>
+                <div class="btn maximize"></div>
+            </div>
+            <span class="title">PranavDOS v3.0</span>
+            <div class="header-controls">
+                <button class="voice-btn" title="Voice Command">🎤</button>
+                <button class="clear-btn">Clear</button>
+            </div>
         </div>
+
+        <!-- Terminal Output Area -->
+        <div class="output">
+            <div class="ascii-art">
+                                          ____                              ____   ___  ____  
+                                         |  _ \ _ __ __ _ _ __   __ ___   _|  _ \ / _ \/ ___| 
+                                         | |_) | '__/ _` | '_ \ / _` \ \ / / | | | | | \___ \ 
+                                         |  __/| | | (_| | | | | (_| |\ V /| |_| | |_| |___) |
+                                         |_|   |_|  \__,_|_| |_|\__,_| \_/ |____/ \___/|____/ 
+    
+            </div>
+            <div class="boot-sequence"></div>
+        </div>
+
+        <!-- Terminal Input Area -->
+        <div class="input-container">
+            <span class="prompt">&gt;</span>
+            <input type="text" id="commandInput" autofocus autocomplete="off" spellcheck="false">
+            <span class="cursor"></span>
+        </div>
+
+        <!-- Project Demo Container -->
+        <div class="project-demo-container" style="display: none;"></div>
     </div>
 
-    <audio id="clickSound" src="click.mp3"></audio>
+    <!-- Scripts -->
     <script src="script.js"></script>
 </body>
 </html>
