@@ -4,11 +4,6 @@
     --terminal-bg: #000000;
     --terminal-font: 'Courier New', monospace;
     --header-height: 40px;
-    --cmd-blue: #00aaff;
-    --cmd-green: #00ff00;
-    --cmd-gray: #cccccc;
-    --cmd-cyan: #00ffcc;
-    --cmd-gold: #ffd700;
 }
 
 * {
@@ -26,19 +21,13 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 1rem;
+    padding: 10px;
+}
+.ascii-art{
+    color:#0f0;
 }
 
-.ascii-art {
-    color: #0f0;
-    white-space: pre-wrap;
-    margin-bottom: 15px;
-    font-size: clamp(8px, 2vw, 12px);
-    line-height: 1.2;
-    overflow-x: auto;
-}
-
-/* Background Elements */
+/* Background Canvases */
 .matrix-background,
 .particle-background {
     position: fixed;
@@ -63,20 +52,22 @@ body {
     background-color: rgba(0, 0, 0, 0.9);
     border: 2px solid var(--terminal-color);
     border-radius: 10px;
-    width: min(1000px, 100%);
-    height: min(600px, 90vh);
+    width: 90%;
+    max-width: 1000px;
+    height: 90vh;
+    max-height: 600px;
     display: flex;
     flex-direction: column;
     position: relative;
     box-shadow: 0 0 20px rgba(229, 252, 229, 0.2);
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease-out;
 }
+
+
 
 /* Terminal Header */
 .header {
-    height: max(var(--header-height), 8vh);
-    padding: 0.5rem;
+    height: var(--header-height);
+    padding: 0 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -87,12 +78,12 @@ body {
 
 .window-controls {
     display: flex;
-    gap: clamp(4px, 1vw, 8px);
+    gap: 8px;
 }
 
 .btn {
-    width: clamp(8px, 2vw, 12px);
-    height: clamp(8px, 2vw, 12px);
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     transition: transform 0.2s;
     cursor: pointer;
@@ -112,58 +103,70 @@ body {
     align-items: center;
 }
 
-/* Terminal Output */
+/* Terminal Output Area */
 .output {
     flex: 1;
     overflow-y: auto;
-    padding: clamp(8px, 2vw, 15px);
-    font-size: clamp(12px, 3vw, 14px);
+    padding: 15px;
+    font-size: 14px;
     line-height: 1.4;
     -webkit-overflow-scrolling: touch;
 }
 
-/* Terminal Input */
+.ascii-art {
+    white-space: pre;
+    margin-bottom: 15px;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+/* Terminal Input Area */
 .input-container {
-    height: max(40px, 8vh);
-    padding: 0 clamp(8px, 2vw, 15px);
+    height: 40px;
+    padding: 0 15px;
     display: flex;
     align-items: center;
-    gap: 8px;
     border-top: 1px solid var(--terminal-color);
     background: rgba(0, 0, 0, 0.8);
 }
 
+
+
 .prompt {
     color: var(--terminal-color);
     margin-right: 8px;
-    font-size: clamp(12px, 2.5vw, 14px);
 }
-
 #commandInput {
     background: transparent;
     border: none;
     color: var(--terminal-color);
     font-family: var(--terminal-font);
-    font-size: clamp(12px, 3vw, 14px);
+    font-size: 14px;
     width: 100%;
     outline: none;
-    padding: 4px;
+    padding: 5px;
 }
 
-/* Interactive Elements */
+
+.cursor {
+    width: 8px;
+    height: 15px;
+    background-color: var(--terminal-color);
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+
+/* Buttons */
 .voice-btn,
 .clear-btn {
     background: transparent;
     border: 1px solid var(--terminal-color);
     color: var(--terminal-color);
-    padding: clamp(4px, 1vw, 10px);
+    padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
     font-family: var(--terminal-font);
-    font-size: clamp(12px, 2.5vw, 14px);
-    min-width: 44px;
-    min-height: 44px;
 }
 
 .voice-btn:hover,
@@ -180,87 +183,9 @@ body {
     right: 0;
     bottom: 40px;
     background: rgba(0, 0, 0, 0.95);
-    padding: clamp(10px, 3vw, 20px);
+    padding: 20px;
     display: none;
     animation: fadeIn 0.3s ease-out;
-}
-
-/* Command Styles */
-.cmd-header {
-    color: var(--cmd-blue);
-    font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 10px;
-}
-
-.cmd-name {
-    color: var(--cmd-green);
-    font-weight: bold;
-}
-
-.cmd-desc {
-    color: var(--cmd-gray);
-}
-
-/* Skills and Projects */
-.skill-category {
-    color: var(--cmd-blue);
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.skill-item {
-    color: #66ff66;
-    margin-left: 20px;
-}
-
-.project-title {
-    color: var(--cmd-cyan);
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.project-desc {
-    color: var(--cmd-gray);
-    margin-left: 20px;
-}
-
-/* Education Styles */
-.edu-institution {
-    color: var(--cmd-cyan);
-    font-weight: bold;
-}
-
-.edu-degree {
-    color: var(--cmd-blue);
-}
-
-.edu-grade {
-    color: #66ff66;
-}
-
-.edu-date {
-    color: var(--cmd-gray);
-    font-style: italic;
-}
-
-.highlight {
-    color: var(--cmd-gold);
-    font-weight: bold;
-}
-
-/* Scrollbar */
-.output::-webkit-scrollbar {
-    width: 8px;
-}
-
-.output::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
-}
-
-.output::-webkit-scrollbar-thumb {
-    background: var(--terminal-color);
-    border-radius: 4px;
 }
 
 /* Animations */
@@ -283,63 +208,133 @@ body {
     100% { transform: translate(0); }
 }
 
-/* Mobile Optimizations */
-@media (max-width: 480px) {
+/* Command Styles */
+.cmd-header { color: #ffdd00; font-weight: bold; }
+.cmd { color: #fbfdfb; }
+.cmd-desc { color: #ffffff; }
+.cmd-error { color: #ff3333; }
+.cmd-success { color: #00ff00; }
+
+/* Scrollbar Styling */
+.output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.output::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.output::-webkit-scrollbar-thumb {
+    background: var(--terminal-color);
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
     body {
-        padding: 0.5rem;
+        padding: 5px;
     }
 
     .terminal {
-        border-width: 1px;
+        width: 100%;
         height: 95vh;
-    }
-
-    .header-controls {
-        gap: 5px;
-    }
-
-    .window-controls {
-        gap: 4px;
-    }
-
-    .btn {
-        width: 10px;
-        height: 10px;
-    }
-}
-
-/* Touch Device Optimization */
-@media (hover: none) {
-    .output {
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-    }
-
-    .btn,
-    .voice-btn,
-    .clear-btn {
-        padding: min(12px, 3vw);
-    }
-}
-
-/* High-DPI Screens */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .terminal {
-        border-width: 0.5px;
-    }
-}
-
-/* Landscape Mode */
-@media (orientation: landscape) and (max-height: 500px) {
-    .terminal {
-        height: 85vh;
+        border-radius: 5px;
     }
 
     .header {
-        height: 30px;
+        padding: 0 10px;
     }
 
-    .input-container {
-        height: 30px;
+    .output {
+        padding: 10px;
+        font-size: 13px;
     }
+
+    #commandInput {
+        font-size: 13px;
+    }
+
+    .window-controls {
+        display: none;
+    }
+
+    .cmd-header {
+        font-size: 1em;
+    }
+
+    .skill-item, .project-desc {
+        margin-left: 10px;
+    }
+}
+
+/* Command styling */
+.cmd-header {
+    color: #00aaff;  /* Bright blue for headers */
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.cmd-name {
+    color: #00ff00;  /* Bright green for commands */
+    font-weight: bold;
+}
+
+.cmd-desc {
+    color: #cccccc;  /* Light gray for descriptions */
+}
+
+/* Skills styling */
+.skill-category {
+    color: #00aaff;  /* Bright blue for category headers */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.skill-item {
+    color: #66ff66;  /* Light green for skills */
+    margin-left: 20px;
+}
+
+/* Project styling */
+.project-title {
+    color: #00ffcc;  /* Cyan for project titles */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.project-desc {
+    color: #cccccc;  /* Light gray for descriptions */
+    margin-left: 20px;
+}
+
+/* Achievement styling */
+.achievement-item {
+    color: #66ff66;  /* Light green for achievements */
+    margin-left: 20px;
+}
+
+/* Education styling */
+.edu-institution {
+    color: #00ffcc;  /* Cyan for institutions */
+    font-weight: bold;
+}
+
+.edu-degree {
+    color: #00aaff;  /* Bright blue for degrees */
+}
+
+.edu-grade {
+    color: #66ff66;  /* Light green for grades */
+}
+
+.edu-date {
+    color: #cccccc;  /* Light gray for dates */
+    font-style: italic;
+}
+
+/* Highlight for important terms */
+.highlight {
+    color: #ffd700;  /* Gold color for highlights */
+    font-weight: bold;
 }
