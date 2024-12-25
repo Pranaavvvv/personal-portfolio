@@ -50,6 +50,7 @@ class Terminal {
         this.commandHistory = [];
         this.historyIndex = -1;
         this.startBootSequence();
+        this.setupMobileOptimizations();
     }
 
     initializeElements() {
@@ -96,15 +97,27 @@ class Terminal {
 
     setupEventListeners() {
         this.input.addEventListener('keydown', (e) => this.handleInput(e));
-        document.querySelector('.clear-btn').addEventListener('click', () => this.clearTerminal());
-        
-        // 3D effect on mouse move
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            this.terminal.style.transform = 
-                `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        document.querySelector('.clear-btn')?.addEventListener('click', () => this.clearTerminal());
+    }
+
+    setupMobileOptimizations() {
+        // Prevent zoom on input focus for mobile devices
+        this.input.addEventListener('focus', (e) => {
+            if (window.innerWidth < 768) {
+                document.body.style.fontSize = '16px';
+            }
         });
+
+        // Handle mobile keyboard appearance
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 768) {
+                const viewportHeight = window.innerHeight;
+                this.terminal.style.height = `${viewportHeight * 0.95}px`;
+            }
+        });
+
+        // Improve touch scrolling
+        this.output.style.webkitOverflowScrolling = 'touch';
     }
 
     handleInput(e) {
@@ -382,6 +395,5 @@ Feel free to reach out! I'm always open to new opportunities and collaborations.
 document.addEventListener('DOMContentLoaded', () => {
     new MatrixEffect();
     const terminal = new Terminal();
-    window.terminal = terminal; // This allows us to access the terminal from the console for testing
+    window.terminal = terminal;
 });
-
