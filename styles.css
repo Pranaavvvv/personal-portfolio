@@ -1,158 +1,304 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* Base Styles */
+:root {
+    --terminal-color: #fde8e8;
+    --terminal-bg: #000000;
+    --terminal-font: 'Courier New', monospace;
+    --header-height: 40px;
+}
 
-body, html {
+* {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--terminal-bg);
+    color: var(--terminal-color);
+    font-family: var(--terminal-font);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Press Start 2P', cursive;
     overflow: hidden;
 }
+.ascii-art{
+    color:#0f0;
+}
 
-.minecraft-theme {
+/* Background Canvases */
+.matrix-background,
+.particle-background {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.matrix-background {
+    opacity: 0.15;
+}
+
+.particle-background {
+    opacity: 0.3;
+}
+
+/* Terminal Container */
+.terminal {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid var(--terminal-color);
+    border-radius: 10px;
+    width: 1000px; /* Increased from 800px */
+    height: 600px; /* Increased from 500px */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     position: relative;
+    box-shadow: 0 0 20px rgba(229, 252, 229, 0.2);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
 }
 
-.minecraft-screen {
-    width: 58%;  /* Set this according to the size of the black screen */
-    height: 32%; /* Set this according to the size of the black screen */
-    background-color: black;
-    position: absolute;
-    top: 45%;  /* Adjust this value to align with the black screen on the Minecraft image */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 5px solid #6A4F4B; /* Optional: You can use this border to match the style */
-}
 
-.portfolio-content {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-@keyframes backgroundMove {
-    from {
-        background-position: center;
-    }
-    to {
-        background-position: center 200px;
-    }
-}
-
-.title {
-    color: #fff;
-    font-size: 42px;
-    text-shadow: 4px 4px 0px #000;
-    text-align: center;
-    margin-bottom: 50px;
-    animation: popIn 1.5s ease-in-out;
-    letter-spacing: 2px;
-    animation: titleGlow 2s infinite alternate;
-}
-
-@keyframes titleGlow {
-    from {
-        text-shadow: 4px 4px 0px #000, 0px 0px 20px #33FF33;
-    }
-    to {
-        text-shadow: 4px 4px 0px #000, 0px 0px 40px #33FF33;
-    }
-}
-
-.start-button {
-    font-size: 28px;
-    background-color: #228B22;
-    color: white;
-    padding: 15px 50px;
-    border: 5px solid #000;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0px 0px 10px #000, 6px 6px 0px #333;
-    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-    animation: popIn 2s ease-in-out;
-}
-
-.start-button:hover {
-    background-color: #32CD32;
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0px 0px 20px #33FF33, 8px 8px 0px #111;
-}
-
-.start-button:active {
-    background-color: #228B22;
-    transform: translateY(2px);
-    box-shadow: 0px 0px 15px #33FF33, 4px 4px 0px #111;
-}
-
-/* Snake styles */
-.snake-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+/* Terminal Header */
+.header {
+    height: var(--header-height);
+    padding: 0 15px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    pointer-events: none; /* Snake does not interfere with other elements */
+    justify-content: space-between;
+    border-bottom: 1px solid var(--terminal-color);
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px 8px 0 0;
 }
 
-.snake-segment {
-    width: 20px;
-    height: 20px;
-    background-color: #33FF33;
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: scale(1.2);
+}
+
+.close { background: #ff5f56; }
+.minimize { background: #ffbd2e; }
+.maximize { background: #27c93f; }
+
+.header-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Terminal Output Area */
+.output {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.ascii-art {
+    white-space: pre;
+    margin-bottom: 15px;
+    font-size: 12px;
+    line-height: 1.2;
+}
+
+/* Terminal Input Area */
+.input-container {
+    height: 40px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--terminal-color);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prompt {
+    color: var(--terminal-color);
+    margin-right: 8px;
+}
+
+#commandInput {
+    background: transparent;
+    border: none;
+    color: var(--terminal-color);
+    font-family: var(--terminal-font);
+    font-size: 14px;
+    width: 100%;
+    outline: none;
+}
+
+.cursor {
+    width: 8px;
+    height: 15px;
+    background-color: var(--terminal-color);
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+
+/* Buttons */
+.voice-btn,
+.clear-btn {
+    background: transparent;
+    border: 1px solid var(--terminal-color);
+    color: var(--terminal-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--terminal-font);
+}
+
+.voice-btn:hover,
+.clear-btn:hover {
+    background: var(--terminal-color);
+    color: var(--terminal-bg);
+}
+
+/* Project Demo Container */
+.project-demo-container {
     position: absolute;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 40px;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 20px;
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* Command Styles */
+.cmd-header { color: #ffdd00; font-weight: bold; }
+.cmd { color: #fbfdfb; }
+.cmd-desc { color: #ffffff; }
+.cmd-error { color: #ff3333; }
+.cmd-success { color: #00ff00; }
+
+/* Scrollbar Styling */
+.output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.output::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.output::-webkit-scrollbar-thumb {
+    background: var(--terminal-color);
     border-radius: 4px;
 }
 
-@keyframes snakeMove {
-    0% { top: 0; left: 0; }
-    25% { top: 0; left: calc(100% - 20px); }
-    50% { top: calc(100% - 20px); left: calc(100% - 20px); }
-    75% { top: calc(100% - 20px); left: 0; }
-    100% { top: 0; left: 0; }
-}
-
-/* Each segment follows the head with slight delay */
-.snake-container #snake-head {
-    animation: snakeMove 10s linear infinite;
-}
-
-.snake-container .snake-segment:nth-child(2) {
-    animation: snakeMove 10s linear infinite;
-    animation-delay: -0.2s;
-}
-
-.snake-container .snake-segment:nth-child(3) {
-    animation: snakeMove 10s linear infinite;
-    animation-delay: -0.4s;
-}
-
-.snake-container .snake-segment:nth-child(4) {
-    animation: snakeMove 10s linear infinite;
-    animation-delay: -0.6s;
-}
-
-.snake-container .snake-segment:nth-child(5) {
-    animation: snakeMove 10s linear infinite;
-    animation-delay: -0.8s;
-}
-
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
+/* Responsive Design */
+@media (max-width: 850px) {
+    .terminal {
+        width: 95%;
+        height: 90vh;
+        margin: 20px;
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+}
+/* Command styling */
+.cmd-header {
+    color: #00aaff;  /* Bright blue for headers */
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.cmd-name {
+    color: #00ff00;  /* Bright green for commands */
+    font-weight: bold;
+}
+
+.cmd-desc {
+    color: #cccccc;  /* Light gray for descriptions */
+}
+
+/* Skills styling */
+.skill-category {
+    color: #00aaff;  /* Bright blue for category headers */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.skill-item {
+    color: #66ff66;  /* Light green for skills */
+    margin-left: 20px;
+}
+
+/* Project styling */
+.project-title {
+    color: #00ffcc;  /* Cyan for project titles */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.project-desc {
+    color: #cccccc;  /* Light gray for descriptions */
+    margin-left: 20px;
+}
+
+/* Achievement styling */
+.achievement-item {
+    color: #66ff66;  /* Light green for achievements */
+    margin-left: 20px;
+}
+
+/* Education styling */
+.edu-institution {
+    color: #00ffcc;  /* Cyan for institutions */
+    font-weight: bold;
+}
+
+.edu-degree {
+    color: #00aaff;  /* Bright blue for degrees */
+}
+
+.edu-grade {
+    color: #66ff66;  /* Light green for grades */
+}
+
+.edu-date {
+    color: #cccccc;  /* Light gray for dates */
+    font-style: italic;
+}
+
+/* Highlight for important terms */
+.highlight {
+    color: #ffd700;  /* Gold color for highlights */
+    font-weight: bold;
 }
